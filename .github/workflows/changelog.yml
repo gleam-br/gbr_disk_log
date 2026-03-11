@@ -18,12 +18,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+        env:
+          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
         with:
           config: cliff.toml
         env:
+          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
