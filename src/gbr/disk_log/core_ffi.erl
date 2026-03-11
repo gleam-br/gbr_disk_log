@@ -1,4 +1,4 @@
--module(gbr_disk_log_core_ffi).
+-module(core_ffi).
 -export([open/2, close/1, log/2, sync/1, chunk/2, start_continuation/0,
          alog/2, balog/2, block/2, unblock/1, inc_wrap_file/1, info/1]).
 
@@ -58,7 +58,7 @@ open(Name, {log_opts, File, Repair, Type, Format, Size, Notify, Head, HeadFunc, 
         {quiet, map_option(Quiet, fun(Q) -> Q end)}
     ],
     ArgL = [{K, V} || {K, V} <- Opts, V /= nil],
-    
+
     case disk_log:open(ArgL) of
         {ok, LogName} -> {ok, LogName};
         {reopened, LogName} -> {ok, LogName};
@@ -134,8 +134,8 @@ info(LogName) ->
             Format = proplists:get_value(format, InfoList, internal),
             Size = proplists:get_value(size, InfoList, infinity),
             Mode = proplists:get_value(mode, InfoList, read_write),
-            
-            {ok, {log_info, 
+
+            {ok, {log_info,
                 if is_atom(Name) -> atom_to_binary(Name, utf8); true -> Name end,
                 if is_list(File) -> list_to_binary(File); true -> File end,
                 unmap_log_type(Type),

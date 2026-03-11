@@ -15,6 +15,33 @@ import gleam/erlang/charlist.{type Charlist}
 import gleam/option.{type Option, None}
 import gleam/result
 
+/// Opaque handle to a disk log process.
+///
+/// - name: Atom disk log instance.
+///
+/// https://www.erlang.org/doc/apps/kernel/disk_log.html
+pub opaque type LogDisk {
+  LogDisk(name: Atom)
+}
+
+/// Opaque configuration options for a disk log.
+///
+/// https://www.erlang.org/doc/apps/kernel/disk_log.html#open/1
+pub opaque type LogOpts {
+  LogOpts(
+    file: Option(String),
+    repair: Option(LogRepair),
+    type_: Option(LogType),
+    format: Option(LogFormat),
+    size: Option(LogSize),
+    notify: Option(Bool),
+    head: Option(Dynamic),
+    head_func: Option(MFA),
+    mode: Option(LogMode),
+    quiet: Option(Bool),
+  )
+}
+
 /// Supported log types for the disk log module.
 pub type LogType {
   /// Halt logs write items to a single file.
@@ -63,27 +90,6 @@ pub type LogSize {
   MaxBytes(Int)
   /// Limit by total bytes and total number of files for wrap logs.
   WrapSize(max_bytes: Int, max_files: Int)
-}
-
-/// Opaque configuration options for a disk log.
-pub opaque type LogOpts {
-  LogOpts(
-    file: Option(String),
-    repair: Option(LogRepair),
-    type_: Option(LogType),
-    format: Option(LogFormat),
-    size: Option(LogSize),
-    notify: Option(Bool),
-    head: Option(Dynamic),
-    head_func: Option(MFA),
-    mode: Option(LogMode),
-    quiet: Option(Bool),
-  )
-}
-
-/// Opaque handle to a disk log process.
-pub opaque type LogDisk {
-  LogDisk(name: Atom)
 }
 
 /// Error type for disk log operations.
@@ -258,49 +264,49 @@ pub fn info(log: LogDisk) -> Result(LogInfo, DiskLogError) {
 }
 
 /// Get the initial continuation.
-@external(erlang, "gbr_disk_log_core_ffi", "start_continuation")
+@external(erlang, "core_ffi", "start_continuation")
 pub fn start_continuation() -> Continuation
 
 /// Internal FFI for disk_log:open
-@external(erlang, "gbr_disk_log_core_ffi", "open")
+@external(erlang, "core_ffi", "open")
 fn open_ffi(name: Atom, args: LogOpts) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:close
-@external(erlang, "gbr_disk_log_core_ffi", "close")
+@external(erlang, "core_ffi", "close")
 fn close_ffi(name: Atom) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:log
-@external(erlang, "gbr_disk_log_core_ffi", "log")
+@external(erlang, "core_ffi", "log")
 fn log_ffi(name: Atom, data: BitArray) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:alog
-@external(erlang, "gbr_disk_log_core_ffi", "alog")
+@external(erlang, "core_ffi", "alog")
 fn alog_ffi(name: Atom, data: BitArray) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:balog
-@external(erlang, "gbr_disk_log_core_ffi", "balog")
+@external(erlang, "core_ffi", "balog")
 fn balog_ffi(name: Atom, data: BitArray) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:sync
-@external(erlang, "gbr_disk_log_core_ffi", "sync")
+@external(erlang, "core_ffi", "sync")
 fn sync_ffi(name: Atom) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:chunk
-@external(erlang, "gbr_disk_log_core_ffi", "chunk")
+@external(erlang, "core_ffi", "chunk")
 fn chunk_ffi(name: Atom, cont: Continuation) -> Result(ChunkData, Charlist)
 
 /// Internal FFI for disk_log:block
-@external(erlang, "gbr_disk_log_core_ffi", "block")
+@external(erlang, "core_ffi", "block")
 fn block_ffi(name: Atom, queue: Bool) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:unblock
-@external(erlang, "gbr_disk_log_core_ffi", "unblock")
+@external(erlang, "core_ffi", "unblock")
 fn unblock_ffi(name: Atom) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:inc_wrap_file
-@external(erlang, "gbr_disk_log_core_ffi", "inc_wrap_file")
+@external(erlang, "core_ffi", "inc_wrap_file")
 fn inc_wrap_file_ffi(name: Atom) -> Result(Atom, Charlist)
 
 /// Internal FFI for disk_log:info
-@external(erlang, "gbr_disk_log_core_ffi", "info")
+@external(erlang, "core_ffi", "info")
 fn info_ffi(name: Atom) -> Result(LogInfo, Charlist)
