@@ -73,7 +73,3 @@ pub fn main() {
   let assert Ok(_) = disk_log.close(log)
 }
 ```
-
-## Ecosystem
-
-This package is part of the foundation of **Gleam-BR** and the **gleam.dev.br** ecosystem, focused on building high-performance, reliable P2P and edge computing solutions.
