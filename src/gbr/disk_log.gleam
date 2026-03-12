@@ -1,5 +1,5 @@
 ////
-//// GBR Disk Log: A Type-Safe wrapper for Erlang's `disk_log`.
+//// 💽 GBR Disk Log: A Type-Safe wrapper for Erlang's `disk_log`.
 ////
 //// This module provides an idiomatic Gleam interface for creating and managing
 //// disk logs. It supports various log types (halt, wrap, rotate), formats
@@ -171,6 +171,39 @@ pub fn format(options: LogOptions, f: LogFormat) -> LogOptions {
 /// Set the repair strategy.
 pub fn repair(options: LogOptions, r: LogRepair) -> LogOptions {
   LogOptions(..options, repair: option.Some(r))
+}
+
+/// Set the notification flag.
+pub fn notify(options: LogOptions, n: Bool) -> LogOptions {
+  LogOptions(..options, notify: option.Some(n))
+}
+
+/// Set the log header.
+pub fn head(options: LogOptions, h: Dynamic) -> LogOptions {
+  LogOptions(..options, head: option.Some(h))
+}
+
+/// Set the log header function (MFA).
+///
+/// This function is used to generate a header for each new log file.
+pub fn head_func(
+  options: LogOptions,
+  module: String,
+  function: String,
+  args: List(Dynamic),
+) -> LogOptions {
+  let mfa = #(atom.create(module), atom.create(function), args)
+  LogOptions(..options, head_func: option.Some(mfa))
+}
+
+/// Set the access mode for the log.
+pub fn mode(options: LogOptions, m: LogMode) -> LogOptions {
+  LogOptions(..options, mode: option.Some(m))
+}
+
+/// Set the quiet flag to suppress error messages to the terminal.
+pub fn quiet(options: LogOptions, q: Bool) -> LogOptions {
+  LogOptions(..options, quiet: option.Some(q))
 }
 
 /// Open a disk log with default options.
