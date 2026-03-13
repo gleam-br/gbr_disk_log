@@ -3,36 +3,40 @@
 [![Hex.pm](https://img.shields.io/hexpm/v/gbr_disk_log.svg)](https://hex.pm/packages/gbr_disk_log)
 [![HexDocs](https://img.shields.io/badge/hex-docs-ffaff3.svg)](https://hexdocs.pm/gbr_disk_log/)
 
-A Type-Safe Gleam wrapper for the robust Erlang `disk_log` module. Designed for Telecom-grade Ring Buffers, high-performance event persistence, and extreme telemetry scenarios.
+Um wrapper Gleam com segurança de tipos para o robusto módulo `disk_log` do Erlang. Projetado para buffers circulares de nível de telecomunicações, persistência de eventos de alto desempenho e cenários de telemetria extrema.
 
 ## Overview
 
-`gbr_disk_log` provides an idiomatic Gleam interface to Erlang's built-in disk logging utility. It allows for efficient logging of binary data to disk with various rotation and repair strategies, ensuring that your application's telemetry and event logs are handled with the same reliability as a Tier-1 telecom system.
+`gbr_disk_log` fornece uma interface Gleam idiomática para o utilitário de registro em disco integrado do Erlang. Ele permite o registro eficiente de dados binários em disco com várias estratégias de rotação e reparo, garantindo que os logs de telemetria e eventos do seu aplicativo sejam tratados com a mesma confiabilidade de um sistema de telecomunicações de nível 1.
 
-## When to use it? (Practical Examples)
+## Quando usar? (Exemplos Práticos)
 
-Erlang's `disk_log` was originally designed by Ericsson for Telecom systems to store massive amounts of Call Detail Records (CDRs) without crashing the nodes or indefinitely filling up the hard drives. In the Gleam ecosystem, it shines in scenarios such as:
+O `disk_log` do Erlang foi originalmente projetado pela Ericsson para sistemas de telecomunicações, para armazenar grandes quantidades de Registros de Detalhes de Chamadas (CDRs) sem travar os nós ou preencher indefinidamente os discos rígidos. No ecossistema Gleam, ele se destaca em cenários como:
 
-* **Bounded Telemetry & IoT:** Storing thousands of high-frequency sensor readings or audit events per second. By using the `Wrap` (ring buffer) mode, you guarantee the log will never exceed a specific megabyte limit on your disk.
-* **Actor State Recovery (WAL):** Implementing a Write-Ahead Log. Before a crucial actor mutates its state (e.g., processing a financial transaction), it asynchronously writes the intent to the `disk_log`. If the server loses power, the actor reads the chunks upon reboot to recover its state.
-* **OOM Prevention:** Relieving memory pressure. If a system is overwhelmed, instead of holding millions of messages in RAM (actor mailboxes), flush them to disk safely.
+* **Telemetria Limitada e IoT:** Armazenamento de milhares de leituras de sensores de alta frequência ou eventos de auditoria por segundo. Ao usar o modo `Wrap` (buffer circular), você garante que o log nunca excederá um limite específico de megabytes no seu disco.
 
-## Why use?
+* **Recuperação de Estado do Ator (WAL):** Implementação de um Log de Gravação Antecipada (WAR). Antes que um ator crucial altere seu estado (por exemplo, processando uma transação financeira), ele grava a intenção de forma assíncrona no `disk_log`. Se o servidor perder energia, o ator lê os blocos após a reinicialização para recuperar seu estado.
+* **Prevenção de OOM:** Alivia a pressão sobre a memória. Se um sistema estiver sobrecarregado, em vez de manter milhões de mensagens na RAM (caixas de correio do ator), elas são gravadas em disco com segurança.
 
-- **Type Safety:** Leverage Gleam's strong type system to avoid common pitfalls when working with Erlang's `disk_log`.
-- **OOM Prevention:** Written directly to disk, preventing memory overflow in high-throughput scenarios.
-- **Async Operations:** Supports both synchronous (`log`) and asynchronous (`async_log`, `binary_async_log`) logging for maximum performance.
-- **Fault Tolerance:** Built on top of Erlang/OTP, benefiting from decades of battle-tested reliability.
-- **Zero Dependencies:** Only depends on the Gleam standard library and Erlang/OTP.
+## Por que usar?
 
-## Limitations (When NOT to use it)
+- **Segurança de Tipos:** Aproveite o sistema de tipos robusto do Gleam para evitar problemas comuns ao trabalhar com o `disk_log` do Erlang.
 
-Transparency is key. `gbr_disk_log` is a highly specialized tool, not a silver bullet:
-* **Not a Human-Readable Logger:** It is designed to store binaries and Erlang terms efficiently, not plain text. You cannot easily `tail -f` a wrap log in your terminal; you must read it programmatically using the `chunk` function. (If you want standard terminal logging, use `gleam_erlang` or `wisp` loggers).
-* **Not a Message Broker:** It is not a replacement for Kafka, RabbitMQ, or NATS. It lacks consumer groups, distributed pub/sub routing, and offset tracking.
-* **Single-Node Only:** It writes to the local file system. It is not a distributed database. If the physical disk is destroyed, the data is lost unless replicated by another system.
+- **Prevenção de OOM:** Gravado diretamente em disco, evitando estouro de memória em cenários de alta taxa de transferência.
 
-## Installation
+- **Operações Assíncronas:** Suporta registro síncrono (`log`) e assíncrono (`async_log`, `binary_async_log`) para máximo desempenho.
+- **Tolerância a Falhas:** Construído sobre Erlang/OTP, beneficiando-se de décadas de confiabilidade comprovada em batalha.
+- **Zero Dependências:** Depende apenas da biblioteca padrão do Gleam e do Erlang/OTP.
+
+## Limitações (Quando NÃO usar)
+
+Transparência é fundamental. `gbr_disk_log` é uma ferramenta altamente especializada, não uma solução mágica:
+* **Não é um Logger Legível por Humanos:** Ele foi projetado para armazenar binários e termos Erlang de forma eficiente, não texto simples. Você não pode simplesmente usar `tail -f` em um log de encapsulamento no seu terminal; você precisa lê-lo programaticamente usando a função `chunk`. (Se você quiser um registro de log padrão no terminal, use os loggers `gleam_erlang` ou `wisp`).
+
+* **Não é um Broker de Mensagens:** Não substitui o Kafka, RabbitMQ ou NATS. Ele não possui grupos de consumidores, roteamento pub/sub distribuído e rastreamento de offsets.
+* **Somente para um único nó:** Grava no sistema de arquivos local. Não é um banco de dados distribuído. Se o disco físico for destruído, os dados serão perdidos, a menos que sejam replicados por outro sistema.
+
+## Instalação
 
 ```sh
 gleam add gbr_disk_log
