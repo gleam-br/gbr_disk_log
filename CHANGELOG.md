@@ -8,11 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- Merge branch 'main' of github.com:gleam-br/gbr_disk_log by @salespaulo
+- Update changelog by @github-actions[bot]
 - Upgrade gh action/checkout@6 by @salespaulo
 
 ### Removed
+- Remove english docs by @salespaulo
 - Remove link to gleam.dev.br by @salespaulo
 
+## New Contributors
+* @github-actions[bot] made their first contribution
 ## [1.1.1] - 2026-03-12
 
 ### Added
