@@ -69,10 +69,10 @@ close(LogName) ->
     end.
 
 log(LogName, Data) ->
-    case disk_log:log(LogName, Data) of
-        ok -> {ok, LogName};
-        {error, Reason} -> {error, disk_log:format_error(Reason)}
-    end.
+  case disk_log:log(LogName, Data) of
+      ok -> {ok, LogName};
+      {error, Reason} -> {error, disk_log:format_error(Reason)}
+  end.
 
 async_log(LogName, Data) ->
     case disk_log:alog(LogName, Data) of

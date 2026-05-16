@@ -245,7 +245,10 @@ pub fn log(log: LogDisk, data: BitArray) -> Result(LogDisk, DiskLogError) {
 /// Log data to a disk log asynchronously.
 ///
 /// This function returns immediately after sending the data to the log process.
-pub fn async_log(log: LogDisk, data: BitArray) -> Result(LogDisk, DiskLogError) {
+pub fn async_log(
+  log: LogDisk,
+  data: BitArray,
+) -> Result(LogDisk, DiskLogError) {
   log.name
   |> ffi_async_log(data)
   |> result.map(fn(name) { LogDisk(name:) })
