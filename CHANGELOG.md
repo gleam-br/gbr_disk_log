@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add: Pequenos ajustes somente by @salespaulo
+
 ### Changed
+- Merge branch 'main' of github.com:gleam-br/gbr_disk_log by @salespaulo
+- Update changelog by @github-actions[bot]
 - Merge branch 'main' of github.com:gleam-br/gbr_disk_log by @salespaulo
 - Update changelog by @github-actions[bot]
 - Upgrade gh action/checkout@6 by @salespaulo
