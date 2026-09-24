@@ -1,6 +1,6 @@
 name: '💡 Feature'
-description: Tem uma sugestão? Aplique sua requisição aqui.
-title: '💡 Feat: <title>'
+description: 'Aplique sua sugestão ou requisito aqui.'
+title: '💡 <title>'
 labels: ['feat']
 body:
     - type: markdown

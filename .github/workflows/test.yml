@@ -3,21 +3,49 @@ name: test
 on:
   push:
     branches:
-      - master
       - main
-  pull_request:
-
 jobs:
   test:
+    name: Testando projetos
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: erlef/setup-beam@v1
         with:
           otp-version: "28"
-          gleam-version: "1.14.0"
-          rebar3-version: "3"
-          # elixir-version: "1"
-      - run: gleam deps download
-      - run: gleam test
-      - run: gleam format --check src test
+          gleam-version: "1.18"
+
+      - name: Test core
+        run: | 
+          cd core
+          gleam deps download
+          gleam test
+          gleam format --check src test
+
+      - name: Test js
+        run: | 
+          cd js
+          gleam deps download
+          gleam test
+          gleam format --check src test
+
+      - name: Test api
+        run: | 
+          cd api
+          gleam deps download
+          gleam test
+          gleam format --check src test
+
+      - name: Test template
+        run: | 
+          cd template
+          gleam deps download
+          gleam test
+          gleam format --check src test
+
+      - name: Test showcase
+        run: | 
+          cd showcase
+          gleam deps download
+          gleam test
+          gleam format --check src test

@@ -1,7 +1,7 @@
-# 💽 Gleam BR: Erlang Disk Log
-
 [![Hex.pm](https://img.shields.io/hexpm/v/gbr_disk_log.svg)](https://hex.pm/packages/gbr_disk_log)
 [![HexDocs](https://img.shields.io/badge/hex-docs-ffaff3.svg)](https://hexdocs.pm/gbr_disk_log/)
+
+# 💽 Gleam BR: Erlang Disk Log
 
 Um wrapper Gleam com segurança de tipos para o robusto módulo `disk_log` do Erlang. Projetado para buffers circulares de nível de telecomunicações, persistência de eventos de alto desempenho e cenários de telemetria extrema.
 

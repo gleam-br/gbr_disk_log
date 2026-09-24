@@ -1,6 +1,7 @@
 name = "gbr_disk_log"
-version = "1.2.0"
-description = "Type-safe Gleam wrapper for Erlang's robust disk_log. Telecom-grade ring buffers, high-performance edge persistence, and telemetry."
+version = "1.2.1"
+gleam = ">= 1.18.0"
+description = "GBR: Gleam wrapper Erlang disk_log"
 repository = { type = "github", user = "gleam-br", repo = "gbr_disk_log" }
 licences = ["Apache-2.0"]
 target = "erlang"

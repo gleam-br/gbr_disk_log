@@ -1,7 +1,7 @@
 name: '🗺️ Roadmap'
-description: Planejamento futuro do projeto.
-title: '🗺️ Roadmap: <title>'
-labels: ['Type ◦ Roadmap']
+description: Planned projects in the future to do.
+title: '🗺️ <title>'
+labels: ['roadmap']
 body:
     - type: input
       id: roadmap-version-target
